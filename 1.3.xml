@@ -261,9 +261,6 @@
         <field name="singlelowvolt" type="text" description="单体最低电压">
           <decode packet="EVAnalog" offset="192" length="2"/>
         </field>
-        <field name="singlemaxtemp1" type="text" description="电池组最高温度1">
-          <decode packet="EVAnalog" offset="194" length="1"/>
-        </field>
         <field name="singlemaxtemp1sn" type="text" description="电池组最高温度1箱号">
           <decode packet="EVAnalog" offset="195" length="1"/>
         </field>
