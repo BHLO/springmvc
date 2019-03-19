@@ -187,9 +187,6 @@
         <field name="the_lowest_temp_battery" type="text" description="电池最低温度箱内位置">
           <decode packet="EVAnalog" offset="31" length="1"/>
         </field>
-        <field name="battery_rated_voltage" type="text" description="电池额定电压">
-          <decode packet="EVAnalog" offset="32" length="2"/>
-        </field>
       </field_group>
       <field_group name="battery_system_monitoring" description="电池系统">
         <field name="battery_cool_way_num" type="text" description="电池冷却方式代码">
