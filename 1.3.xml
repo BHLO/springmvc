@@ -201,9 +201,6 @@
         <field name="battery_pack_manufacture_day" type="text" description="电池组生产日期（日）">
           <decode packet="EVAnalog" offset="38" length="1"/>
         </field>
-        <field name="battery_pack_manufacture_month" type="text" description="电池组生产日期（月）">
-          <decode packet="EVAnalog" offset="39" length="1"/>
-        </field>
         <field name="battery_pack_system_break_info" type="text" description="电池组系统故障信息">
           <decode packet="EVAnalog" offset="41" length="1"/>
         </field>
