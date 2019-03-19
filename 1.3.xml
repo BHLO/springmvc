@@ -123,9 +123,6 @@
         <field name="apitemp" type="text" description="气泵逆变器温度">
           <decode packet="EVAnalog" offset="6" length="1"/>
         </field>
-        <field name="apivoltageout" type="text" description="气泵逆变器输出电压">
-          <decode packet="EVAnalog" offset="7" length="2"/>
-        </field>
         <field name="gaspump_status" type="text" description="气泵状态">
           <decode packet="StateInfo1" offset="32" length="1"/>
         </field>
