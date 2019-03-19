@@ -1,0 +1,1074 @@
+<!DOCTYPE types SYSTEM "database.dtd">
+<types>
+  <type name="vinfo_2_1p3">
+    <packets>
+      <packet name="global" type="bit">
+        <payloads>
+          <payload name="length" type="int" description="包长" offset="0" length="16"/>
+          <payload name="vehicletypeid" type="text" description="车辆ID" offset="16" length="72"/>
+          <payload name="magic" type="int" description="数据包标识" offset="88" length="8" value="255"/>
+          <payload name="time" type="text" description="时间" offset="96" length="56"/>
+          <payload name="database_id" type="text" description="入库识别码" offset="152" length="64" value="DG201011"/>
+          <payload name="section_count" type="int" description="数据段个数" offset="216" length="8" value="7"/>
+          <payload name="StateInfo1" type="packet" description="状态量1" offset="1440" length="72"/>
+          <payload name="StateInfo2" type="packet" description="状态量2" offset="1512" length="56"/>
+          <payload name="StateInfo3" type="packet" description="状态量3" offset="1568" length="88"/>
+          <payload name="EVStateInfo" type="packet" description="电车状态量" offset="224" length="48"/>
+          <payload name="AnalogInfo" type="packet" description="模拟量" offset="272" length="1120"/>
+          <payload name="EVAnalog" type="packet" description="电车模拟量1" offset="1656" length="7184"/>
+          <payload name="EVAnalog2" type="packet" description="电车模拟量2" offset="1392" length="32"/>
+          <payload name="checksum" type="int" description="校验码" offset="1424" length="16"/>
+        </payloads>
+      </packet>
+      <packet name="EVStateInfo" type="bit">
+        <payloads>
+          <payload name="length" type="int" description="包长" offset="0" length="16"/>
+          <payload name="magic" type="int" description="数据包标识" offset="24" length="8" value="1"/>
+        </payloads>
+      </packet>
+      <packet name="StateInfo1" type="bit">
+        <payloads>
+          <payload name="length" type="int" description="包长" offset="0" length="16"/>
+          <payload name="magic" type="int" description="数据包标识" offset="24" length="8" value="1"/>
+        </payloads>
+      </packet>
+      <packet name="StateInfo2" type="bit">
+        <payloads>
+          <payload name="length" type="int" description="包长" offset="0" length="16"/>
+          <payload name="magic" type="int" description="数据包标识" offset="24" length="8" value="1"/>
+        </payloads>
+      </packet>
+      <packet name="StateInfo3" type="bit">
+        <payloads>
+          <payload name="length" type="int" description="包长" offset="0" length="16"/>
+          <payload name="magic" type="int" description="数据包标识" offset="24" length="8" value="1"/>
+        </payloads>
+      </packet>
+      <packet name="AnalogInfo" type="byte">
+        <payloads>
+          <payload name="length" type="int" description="包长" offset="0" length="2"/>
+          <payload name="magic" type="int" description="数据包标识" offset="3" length="1" value="2"/>
+        </payloads>
+      </packet>
+      <packet name="EVAnalog" type="byte">
+        <payloads>
+          <payload name="length" type="int" description="包长" offset="0" length="2"/>
+          <payload name="magic" type="int" description="数据包标识" offset="3" length="1" value="2"/>
+        </payloads>
+      </packet>
+      <packet name="EVAnalog2" type="byte">
+        <payloads>
+          <payload name="length" type="int" description="包长" offset="0" length="2"/>
+          <payload name="magic" type="int" description="数据包标识" offset="3" length="1" value="2"/>
+        </payloads>
+      </packet>
+    </packets>
+    <fields>
+      <field_group name="adas_system_monitoring" description="ADAS系统">
+        <field name="adas_fault_code" type="text" description="ADAS错误码值">
+          <decode packet="AnalogInfo" offset="4" length="1"/>
+        </field>
+        <field name="adas_limit_speed_mark_auto_recognition" type="text" description="ADAS限速标志自动识别">
+          <decode packet="AnalogInfo" offset="5" length="1"/>
+        </field>
+        <field name="car_distance_monitor" type="text" description="车距监测">
+          <decode packet="AnalogInfo" offset="6" length="1"/>
+        </field>
+        <field name="front_car_collision" type="text" description="前车碰撞">
+          <decode packet="StateInfo3" offset="32" length="1"/>
+        </field>
+        <field name="front_collision" type="text" description="前碰撞">
+          <decode packet="StateInfo3" offset="33" length="1"/>
+        </field>
+        <field name="left_lane_departure" type="text" description="左侧车道偏离">
+          <decode packet="StateInfo3" offset="34" length="1"/>
+        </field>
+        <field name="pedestrian_collision" type="text" description="行人碰撞">
+          <decode packet="StateInfo3" offset="35" length="1"/>
+        </field>
+        <field name="right_lane_departure" type="text" description="右侧车道偏离">
+          <decode packet="StateInfo3" offset="36" length="1"/>
+        </field>
+        <field name="system_inter_status_1" type="text" description="系统内部状态1">
+          <decode packet="StateInfo3" offset="37" length="1"/>
+        </field>
+        <field name="system_inter_status_2" type="text" description="系统内部状态2">
+          <decode packet="StateInfo3" offset="38" length="1"/>
+        </field>
+        <field name="system_inter_status_3" type="text" description="系统内部状态3">
+          <decode packet="StateInfo3" offset="39" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="system_monitoring" description="刹车系统">
+        <field name="air_pressure_1" type="text" description="气压1（12bar）">
+          <decode packet="AnalogInfo" offset="7" length="2"/>
+        </field>
+        <field name="air_pressure_2" type="text" description="气压2（12bar）">
+          <decode packet="AnalogInfo" offset="9" length="2"/>
+        </field>
+        <field name="air_pressure_3" type="text" description="气压3（12bar）">
+          <decode packet="AnalogInfo" offset="11" length="2"/>
+        </field>
+        <field name="air_pressure_4" type="text" description="气压4（12bar）">
+          <decode packet="AnalogInfo" offset="13" length="2"/>
+        </field>
+        <field name="driveraccelpanel" type="text" description="司机加速踏板位置">
+          <decode packet="EVAnalog" offset="4" length="1"/>
+        </field>
+        <field name="driverbrakepanel" type="text" description="司机制动踏板位置">
+          <decode packet="EVAnalog" offset="5" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="Air_pump_system_monitoring" description="气泵系统">
+        <field name="apitemp" type="text" description="气泵逆变器温度">
+          <decode packet="EVAnalog" offset="6" length="1"/>
+        </field>
+        <field name="apivoltageout" type="text" description="气泵逆变器输出电压">
+          <decode packet="EVAnalog" offset="7" length="2"/>
+        </field>
+        <field name="gaspump_status" type="text" description="气泵状态">
+          <decode packet="StateInfo1" offset="32" length="1"/>
+        </field>
+        <field name="apicurrentout" type="text" description="气泵逆变器输出电流">
+          <decode packet="EVAnalog" offset="9" length="2"/>
+        </field>
+        <field name="apicurrentin" type="text" description="气泵逆变器输入电流">
+          <decode packet="EVAnalog" offset="11" length="2"/>
+        </field>
+        <field name="gaspumpcurent" type="text" description="气泵控制器电流">
+          <decode packet="AnalogInfo" offset="15" length="1"/>
+        </field>
+        <field name="gaspumpspeed" type="text" description="气泵电机转速">
+          <decode packet="AnalogInfo" offset="16" length="2"/>
+        </field>
+        <field name="gaspumpvol" type="text" description="气泵控制器电压">
+          <decode packet="AnalogInfo" offset="18" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="bus_body_information" description="车身信息">
+        <field name="vehicle_status" type="text" description="车辆状态">
+          <decode packet="StateInfo1" offset="33" length="1"/>
+        </field>
+        <field name="water_pressure_sensor_power" type="text" description="水压传感器电源">
+          <decode packet="StateInfo3" offset="40" length="1"/>
+        </field>
+        <field name="dry_bottle_pressure_power" type="text" description="干燥瓶压力开关">
+          <decode packet="StateInfo3" offset="41" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="information_monitoring_of_battery_system" description="电池系统">
+        <field name="battery_area" type="text" description="电池地区">
+          <decode packet="EVAnalog" offset="13" length="2"/>
+        </field>
+        <field name="battery_manufacturer" type="text" description="电池厂家">
+          <decode packet="EVAnalog" offset="15" length="2"/>
+        </field>
+        <field name="battery_pack_information" type="text" description="电池组信息">
+          <decode packet="EVAnalog" offset="17" length="4"/>
+        </field>
+        <field name="battery_rated_energy" type="text" description="电池额定能量">
+          <decode packet="EVAnalog" offset="21" length="2"/>
+        </field>
+        <field name="battery_residual_energy" type="text" description="电池剩余能量">
+          <decode packet="EVAnalog" offset="23" length="2"/>
+        </field>
+        <field name="max_allowed_feedback_current" type="text" description="最大允许回馈电流">
+          <decode packet="EVAnalog" offset="25" length="2"/>
+        </field>
+        <field name="max_allowed_out_current" type="text" description="最大允许放电电流">
+          <decode packet="EVAnalog" offset="27" length="2"/>
+        </field>
+        <field name="total_battery_temp_node_number" type="text" description="电池总温度节点数">
+          <decode packet="EVAnalog" offset="29" length="1"/>
+        </field>
+        <field name="battery_max_temp_inside_the_box" type="text" description="电池最高温度箱内位置">
+          <decode packet="EVAnalog" offset="30" length="1"/>
+        </field>
+        <field name="the_lowest_temp_battery" type="text" description="电池最低温度箱内位置">
+          <decode packet="EVAnalog" offset="31" length="1"/>
+        </field>
+        <field name="battery_rated_voltage" type="text" description="电池额定电压">
+          <decode packet="EVAnalog" offset="32" length="2"/>
+        </field>
+      </field_group>
+      <field_group name="battery_system_monitoring" description="电池系统">
+        <field name="battery_cool_way_num" type="text" description="电池冷却方式代码">
+          <decode packet="EVAnalog" offset="34" length="1"/>
+        </field>
+        <field name="batterycount" type="text" description="电池包总数">
+          <decode packet="EVAnalog" offset="35" length="1"/>
+        </field>
+        <field name="batterymaxtemp" type="text" description="电池包最高温度">
+          <decode packet="EVAnalog" offset="36" length="1"/>
+        </field>
+        <field name="batterymintemp" type="text" description="电池包最低温度">
+          <decode packet="EVAnalog" offset="37" length="1"/>
+        </field>
+        <field name="battery_pack_manufacture_day" type="text" description="电池组生产日期（日）">
+          <decode packet="EVAnalog" offset="38" length="1"/>
+        </field>
+        <field name="battery_pack_manufacture_month" type="text" description="电池组生产日期（月）">
+          <decode packet="EVAnalog" offset="39" length="1"/>
+        </field>
+        <field name="battery_pack_manufacture_year" type="text" description="电池组生产日期（年）">
+          <decode packet="EVAnalog" offset="40" length="1"/>
+        </field>
+        <field name="battery_pack_system_break_info" type="text" description="电池组系统故障信息">
+          <decode packet="EVAnalog" offset="41" length="1"/>
+        </field>
+        <field name="battery_producer_num" type="text" description="电池生产商代码">
+          <decode packet="EVAnalog" offset="42" length="4"/>
+        </field>
+        <field name="batterysn" type="text" description="电池包包号">
+          <decode packet="EVAnalog" offset="46" length="1"/>
+        </field>
+        <field name="batterytotalvolt" type="text" description="电池总电压">
+          <decode packet="EVAnalog" offset="47" length="2"/>
+        </field>
+        <field name="battery_type_num" type="text" description="电池类型代码">
+          <decode packet="EVAnalog" offset="49" length="1"/>
+        </field>
+        <field name="bmslifesignal" type="text" description="BMS life信号">
+          <decode packet="EVAnalog" offset="50" length="124"/>
+        </field>
+        <field name="bmvoltagelow" type="text" description="电池模块最低电压">
+          <decode packet="EVAnalog" offset="174" length="2"/>
+        </field>
+        <field name="buscurrent" type="text" description="(电池)总线电流">
+          <decode packet="EVAnalog" offset="176" length="2"/>
+        </field>
+        <field name="chargercurrent" type="text" description="(电池)总线充电电流">
+          <decode packet="EVAnalog" offset="178" length="2"/>
+        </field>
+        <field name="highvoltbatcurrent" type="text" description="高压电池电流">
+          <decode packet="EVAnalog" offset="180" length="2"/>
+        </field>
+        <field name="mccurrent" type="text" description="电机控制器电流">
+          <decode packet="EVAnalog" offset="182" length="2"/>
+        </field>
+        <field name="outputenergy" type="text" description="输出能量">
+          <decode packet="EVAnalog" offset="184" length="2"/>
+        </field>
+        <field name="remainenergy" type="text" description="剩余能量">
+          <decode packet="EVAnalog" offset="186" length="2"/>
+        </field>
+        <field name="singlehightemp" type="text" description="单体最高温度">
+          <decode packet="EVAnalog" offset="188" length="1"/>
+        </field>
+        <field name="singlehighvolt" type="text" description="单体最高电压">
+          <decode packet="EVAnalog" offset="189" length="2"/>
+        </field>
+        <field name="singlelowtemp" type="text" description="单体最低温度">
+          <decode packet="EVAnalog" offset="191" length="1"/>
+        </field>
+        <field name="singlelowvolt" type="text" description="单体最低电压">
+          <decode packet="EVAnalog" offset="192" length="2"/>
+        </field>
+        <field name="singlemaxtemp1" type="text" description="电池组最高温度1">
+          <decode packet="EVAnalog" offset="194" length="1"/>
+        </field>
+        <field name="singlemaxtemp1sn" type="text" description="电池组最高温度1箱号">
+          <decode packet="EVAnalog" offset="195" length="1"/>
+        </field>
+        <field name="singlemaxvolt1" type="text" description="最高单体电压1">
+          <decode packet="EVAnalog" offset="196" length="2"/>
+        </field>
+        <field name="singlemaxvolt1count" type="text" description="最高单体电压1节数">
+          <decode packet="EVAnalog" offset="198" length="1"/>
+        </field>
+        <field name="singlemaxvolt1sn" type="text" description="最高单体电压1箱号">
+          <decode packet="EVAnalog" offset="199" length="1"/>
+        </field>
+        <field name="soc" type="text" description="SOC">
+          <decode packet="EVAnalog" offset="200" length="1"/>
+        </field>
+        <field name="BMS_request" type="text" description="BMS请求">
+          <decode packet="EVStateInfo" offset="32" length="1"/>
+        </field>
+        <field name="engineready" type="text" description="动力系统就绪">
+          <decode packet="EVStateInfo" offset="33" length="1"/>
+        </field>
+        <field name="powerSbCharge" type="text" description="动力蓄电池充电">
+          <decode packet="EVStateInfo" offset="34" length="1"/>
+        </field>
+        <field name="bmsPassiveControlMode" type="text" description="低压转向工作状态">
+          <decode packet="EVStateInfo" offset="35" length="1"/>
+        </field>
+        <field name="bmsReady" type="text" description="BMS准备就绪">
+          <decode packet="EVStateInfo" offset="36" length="1"/>
+        </field>
+        <field name="bmvoltagehigh" type="text" description="电池模块最高电压">
+          <decode packet="EVAnalog" offset="201" length="2"/>
+        </field>
+        <field name="single_battery_total" type="text" description="电池单体总数">
+          <decode packet="EVAnalog" offset="203" length="2"/>
+        </field>
+        <field name="singlemintemp1sn" type="text" description="电池组最低温度1箱号">
+          <decode packet="EVAnalog" offset="205" length="1"/>
+        </field>
+        <field name="singlemintemp1" type="text" description="电池组最低温度1">
+          <decode packet="EVAnalog" offset="206" length="1"/>
+        </field>
+        <field name="singleminvolt1count" type="text" description="最低单体电压1节数">
+          <decode packet="EVAnalog" offset="207" length="1"/>
+        </field>
+        <field name="singleminvolt1sn" type="text" description="最低单体电压1箱号">
+          <decode packet="EVAnalog" offset="208" length="1"/>
+        </field>
+        <field name="singleminvolt1" type="text" description="最低单体电压1">
+          <decode packet="EVAnalog" offset="209" length="2"/>
+        </field>
+        <field name="cumulativechargtime" type="text" description="累计充电时间">
+          <decode packet="EVAnalog" offset="211" length="2"/>
+        </field>
+        <field name="avg_hundred_miles_ele" type="text" description="平均百公里电耗">
+          <decode packet="EVAnalog" offset="213" length="1"/>
+        </field>
+        <field name="bmscheckstat" type="text" description="BMS自检状态">
+          <decode packet="EVStateInfo" offset="37" length="1"/>
+        </field>
+        <field name="chargeconnectindicate" type="text" description="充电连接器指示">
+          <decode packet="EVStateInfo" offset="38" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="radar_system_monitoring" description="雷达系统">
+        <field name="blm_radar_info" type="text" description="后左中雷达信息">
+          <decode packet="AnalogInfo" offset="19" length="1"/>
+        </field>
+        <field name="bl_radar_info" type="text" description="后左雷达信息">
+          <decode packet="AnalogInfo" offset="20" length="1"/>
+        </field>
+        <field name="brm_radar_info" type="text" description="后右中雷达信息">
+          <decode packet="AnalogInfo" offset="21" length="1"/>
+        </field>
+        <field name="br_radar_info" type="text" description="后右雷达信息">
+          <decode packet="AnalogInfo" offset="22" length="1"/>
+        </field>
+        <field name="flm_radar_info" type="text" description="前左中雷达信息">
+          <decode packet="AnalogInfo" offset="23" length="1"/>
+        </field>
+        <field name="fl_radar_info" type="text" description="前左雷达信息">
+          <decode packet="AnalogInfo" offset="24" length="1"/>
+        </field>
+        <field name="frm_radar_info" type="text" description="前右中雷达信息">
+          <decode packet="AnalogInfo" offset="25" length="1"/>
+        </field>
+        <field name="fr_radar_info" type="text" description="前右雷达信息">
+          <decode packet="AnalogInfo" offset="26" length="1"/>
+        </field>
+        <field name="left_side_back__radar_info" type="text" description="左侧后雷达信息">
+          <decode packet="AnalogInfo" offset="27" length="1"/>
+        </field>
+        <field name="left_side_front_radar_info" type="text" description="左侧前雷达信息">
+          <decode packet="AnalogInfo" offset="28" length="1"/>
+        </field>
+        <field name="right_side_back_radar_info" type="text" description="右侧后雷达信息">
+          <decode packet="AnalogInfo" offset="29" length="1"/>
+        </field>
+        <field name="right_side_front_radar_info" type="text" description="右侧前雷达信息">
+          <decode packet="AnalogInfo" offset="30" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="air_conditioning_system_monitoring" description="空调系统">
+        <field name="compreloadratio" type="text" description="压缩机负载比例">
+          <decode packet="AnalogInfo" offset="31" length="1"/>
+        </field>
+        <field name="conditioner_in_current" type="text" description="空调输入总电流">
+          <decode packet="AnalogInfo" offset="32" length="1"/>
+        </field>
+        <field name="conditioner_in_volt" type="text" description="空调输入电压">
+          <decode packet="AnalogInfo" offset="33" length="2"/>
+        </field>
+        <field name="conditioner_present_consume" type="text" description="空调瞬时功耗">
+          <decode packet="AnalogInfo" offset="35" length="2"/>
+        </field>
+        <field name="conditioner_total_consume" type="text" description="空调总能耗">
+          <decode packet="AnalogInfo" offset="37" length="3"/>
+        </field>
+        <field name="settemp" type="text" description="设定温度">
+          <decode packet="AnalogInfo" offset="40" length="1"/>
+        </field>
+        <field name="waterbacktemp" type="text" description="热管理系统_回水温度">
+          <decode packet="AnalogInfo" offset="41" length="1"/>
+        </field>
+        <field name="wateroutputtemp" type="text" description="热管理系统_出水温度">
+          <decode packet="AnalogInfo" offset="42" length="1"/>
+        </field>
+        <field name="bactericidalmode" type="text" description="杀菌模式">
+          <decode packet="StateInfo2" offset="32" length="1"/>
+        </field>
+        <field name="conditionfreshing" type="text" description="新风模式">
+          <decode packet="StateInfo2" offset="33" length="1"/>
+        </field>
+        <field name="conditionheating" type="text" description="制热模式">
+          <decode packet="StateInfo2" offset="34" length="1"/>
+        </field>
+        <field name="conditoncooling" type="text" description="制冷模式">
+          <decode packet="StateInfo2" offset="35" length="1"/>
+        </field>
+        <field name="coolingdefostmode" type="text" description="制冷除霜模式">
+          <decode packet="StateInfo2" offset="36" length="1"/>
+        </field>
+        <field name="heatpdefostmode" type="text" description="热泵除霜模式">
+          <decode packet="StateInfo2" offset="37" length="1"/>
+        </field>
+        <field name="highspeedmode" type="text" description="高速">
+          <decode packet="StateInfo2" offset="38" length="1"/>
+        </field>
+        <field name="lowspeedmode" type="text" description="低速">
+          <decode packet="StateInfo2" offset="39" length="1"/>
+        </field>
+        <field name="middlespeedmode" type="text" description="中速">
+          <decode packet="StateInfo2" offset="40" length="1"/>
+        </field>
+        <field name="ptcheatingmode" type="text" description="PTC加热模式">
+          <decode packet="StateInfo2" offset="41" length="1"/>
+        </field>
+        <field name="hybridstopmode" type="text" description="混合动力停机模式">
+          <decode packet="StateInfo2" offset="42" length="1"/>
+        </field>
+        <field name="liquidconsumeval" type="text" description="空调控制器life">
+          <decode packet="EVAnalog" offset="214" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="motor_system_monitoring" description="电机系统">
+        <field name="controllerlife" type="text" description="整车控制器life">
+          <decode packet="EVAnalog" offset="215" length="1"/>
+        </field>
+        <field name="cursingdistance" type="text" description="续航里程">
+          <decode packet="EVAnalog" offset="216" length="2"/>
+        </field>
+        <field name="drive_motor_total" type="text" description="驱动电机个数">
+          <decode packet="EVAnalog" offset="218" length="1"/>
+        </field>
+        <field name="mctemp" type="text" description="电机控制器温度">
+          <decode packet="EVAnalog" offset="219" length="1"/>
+        </field>
+        <field name="mcvoltagefront" type="text" description="电机控制器前端电压">
+          <decode packet="EVAnalog" offset="220" length="2"/>
+        </field>
+        <field name="motor_controller_life" type="text" description="电机控制器life">
+          <decode packet="EVAnalog" offset="222" length="1"/>
+        </field>
+        <field name="motor_cool_way" type="text" description="电机冷却方式">
+          <decode packet="EVAnalog" offset="223" length="1"/>
+        </field>
+        <field name="motorcurrent" type="text" description="驱动电机电流">
+          <decode packet="EVAnalog" offset="224" length="2"/>
+        </field>
+        <field name="motor_max_speed" type="text" description="电机最高转速">
+          <decode packet="EVAnalog" offset="226" length="2"/>
+        </field>
+        <field name="motor_max_work_current" type="text" description="电机最大工作电流">
+          <decode packet="EVAnalog" offset="228" length="2"/>
+        </field>
+        <field name="motor_peak_power" type="text" description="电机峰值功率">
+          <decode packet="EVAnalog" offset="230" length="2"/>
+        </field>
+        <field name="motor_peak_torque" type="text" description="电机峰值转矩">
+          <decode packet="EVAnalog" offset="232" length="2"/>
+        </field>
+        <field name="motor_rated_power" type="text" description="电机额定功率">
+          <decode packet="EVAnalog" offset="234" length="2"/>
+        </field>
+        <field name="motor_rated_voltage" type="text" description="电机额定电压">
+          <decode packet="EVAnalog" offset="236" length="2"/>
+        </field>
+        <field name="motorspeed" type="text" description="电机转速">
+          <decode packet="EVAnalog" offset="238" length="2"/>
+        </field>
+        <field name="motor_temp" type="text" description="电机温度">
+          <decode packet="EVAnalog" offset="240" length="1"/>
+        </field>
+        <field name="drive_motor_id" type="text" description="驱动电机序号">
+          <decode packet="EVAnalog" offset="241" length="1"/>
+        </field>
+        <field name="motor_max_out_torque" type="text" description="电机最大输出转矩">
+          <decode packet="EVAnalog" offset="242" length="2"/>
+        </field>
+        <field name="motorpower" type="text" description="驱动电机功率">
+          <decode packet="EVAnalog" offset="244" length="2"/>
+        </field>
+        <field name="motortorque" type="text" description="驱动电机扭矩">
+          <decode packet="EVAnalog" offset="246" length="2"/>
+        </field>
+        <field name="vehiclestate" type="text" description="整车状态">
+          <decode packet="EVAnalog" offset="248" length="1"/>
+        </field>
+        <field name="motorbusbarcurrent" type="text" description="电机母线电流">
+          <decode packet="EVAnalog" offset="249" length="2"/>
+        </field>
+        <field name="mcucheckcode" type="text" description="MCU系统故障代码">
+          <decode packet="EVAnalog" offset="251" length="204"/>
+        </field>
+      </field_group>
+      <field_group name="engine_system_monitoring" description="发动机系统">
+        <field name="cumulativeenginerevolution" type="text" description="累计发动机转数">
+          <decode packet="AnalogInfo" offset="43" length="4"/>
+        </field>
+        <field name="insidetemper" type="text" description="车内温度">
+          <decode packet="AnalogInfo" offset="47" length="2"/>
+        </field>
+        <field name="outsidetemper" type="text" description="车外温度">
+          <decode packet="AnalogInfo" offset="49" length="2"/>
+        </field>
+        <field name="engine" type="text" description="发动机转速">
+          <decode packet="AnalogInfo" offset="51" length="2"/>
+        </field>
+      </field_group>
+      <field_group name="DCDC_system_monitoring" description="DCDC系统">
+        <field name="dccheckcode" type="text" description="DCDC故障代码">
+          <decode packet="EVAnalog" offset="463" length="203"/>
+        </field>
+        <field name="dcinvolt" type="text" description="DCDC输入电压">
+          <decode packet="EVAnalog" offset="666" length="2"/>
+        </field>
+        <field name="dcoutcurrent" type="text" description="DCDC输出电流">
+          <decode packet="EVAnalog" offset="668" length="2"/>
+        </field>
+        <field name="dcoutvolt" type="text" description="DCDC输出电压">
+          <decode packet="EVAnalog" offset="670" length="2"/>
+        </field>
+        <field name="dcradiatortemp" type="text" description="DCDC散热器温度">
+          <decode packet="EVAnalog" offset="672" length="202"/>
+        </field>
+        <field name="DCDC_status" type="text" description="DCDC状态">
+          <decode packet="StateInfo1" offset="34" length="1"/>
+        </field>
+        <field name="input_cutoff" type="text" description="DCDC输入切断">
+          <decode packet="EVStateInfo" offset="39" length="1"/>
+        </field>
+        <field name="output_cutoff" type="text" description="DCDC输出切断">
+          <decode packet="EVStateInfo" offset="40" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="charger_monitoring" description="充电机">
+        <field name="external_charge_duration" type="text" description="外接充电间隔时间">
+          <decode packet="EVAnalog" offset="874" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="smoke_system_monitoring" description="烟雾">
+        <field name="find_alarm_appear" type="text" description="探测到报警信息">
+          <decode packet="StateInfo3" offset="42" length="1"/>
+        </field>
+        <field name="fog_monitor_product_num" type="text" description="烟雾报警器厂家编号1">
+          <decode packet="AnalogInfo" offset="53" length="1"/>
+        </field>
+        <field name="fog_monitor_product_num_2" type="text" description="烟雾报警器厂家编号2">
+          <decode packet="AnalogInfo" offset="54" length="1"/>
+        </field>
+        <field name="fog_monitor_product_num_3" type="text" description="烟雾报警器厂家编号3">
+          <decode packet="AnalogInfo" offset="55" length="1"/>
+        </field>
+        <field name="fog_monitor_product_num_4" type="text" description="烟雾报警器厂家编号4">
+          <decode packet="AnalogInfo" offset="56" length="1"/>
+        </field>
+        <field name="fog_monitor_product_num_5" type="text" description="烟雾报警器厂家编号5">
+          <decode packet="AnalogInfo" offset="57" length="1"/>
+        </field>
+        <field name="fog_monitor_product_num_6" type="text" description="烟雾报警器厂家编号6">
+          <decode packet="AnalogInfo" offset="58" length="1"/>
+        </field>
+        <field name="fog_monitor_product_num_7" type="text" description="烟雾报警器厂家编号7">
+          <decode packet="AnalogInfo" offset="59" length="1"/>
+        </field>
+        <field name="fog_monitor_product_num_8" type="text" description="烟雾报警器厂家编号8">
+          <decode packet="AnalogInfo" offset="60" length="1"/>
+        </field>
+        <field name="fog_monitor_temp" type="text" description="烟雾报警器温度1">
+          <decode packet="AnalogInfo" offset="61" length="1"/>
+        </field>
+        <field name="fog_monitor_temp_2" type="text" description="烟雾报警器温度2">
+          <decode packet="AnalogInfo" offset="62" length="1"/>
+        </field>
+        <field name="fog_monitor_temp_3" type="text" description="烟雾报警器温度3">
+          <decode packet="AnalogInfo" offset="63" length="1"/>
+        </field>
+        <field name="fog_monitor_temp_4" type="text" description="烟雾报警器温度4">
+          <decode packet="AnalogInfo" offset="64" length="1"/>
+        </field>
+        <field name="fog_monitor_temp_5" type="text" description="烟雾报警器温度5">
+          <decode packet="AnalogInfo" offset="65" length="1"/>
+        </field>
+        <field name="fog_monitor_temp_6" type="text" description="烟雾报警器温度6">
+          <decode packet="AnalogInfo" offset="66" length="1"/>
+        </field>
+        <field name="fog_monitor_temp_7" type="text" description="烟雾报警器温度7">
+          <decode packet="AnalogInfo" offset="67" length="1"/>
+        </field>
+        <field name="fog_monitor_temp_8" type="text" description="烟雾报警器温度8">
+          <decode packet="AnalogInfo" offset="68" length="1"/>
+        </field>
+        <field name="fog_temp_alarm_life_signal_1" type="text" description="烟雾及温度预警life信号1">
+          <decode packet="AnalogInfo" offset="69" length="1"/>
+        </field>
+        <field name="fog_temp_alarm_life_signal_2" type="text" description="烟雾及温度预警life信号2">
+          <decode packet="AnalogInfo" offset="70" length="1"/>
+        </field>
+        <field name="fog_temp_alarm_life_signal_3" type="text" description="烟雾及温度预警life信号3">
+          <decode packet="AnalogInfo" offset="71" length="1"/>
+        </field>
+        <field name="fog_temp_alarm_life_signal_4" type="text" description="烟雾及温度预警life信号4">
+          <decode packet="AnalogInfo" offset="72" length="1"/>
+        </field>
+        <field name="fog_temp_alarm_life_signal_5" type="text" description="烟雾及温度预警life信号5">
+          <decode packet="AnalogInfo" offset="73" length="1"/>
+        </field>
+        <field name="fog_temp_alarm_life_signal_6" type="text" description="烟雾及温度预警life信号6">
+          <decode packet="AnalogInfo" offset="74" length="1"/>
+        </field>
+        <field name="fog_temp_alarm_life_signal_7" type="text" description="烟雾及温度预警life信号7">
+          <decode packet="AnalogInfo" offset="75" length="1"/>
+        </field>
+        <field name="fog_temp_alarm_life_signal_8" type="text" description="烟雾及温度预警life信号8">
+          <decode packet="AnalogInfo" offset="76" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="generator_system_monitoring" description="发电机系统">
+        <field name="generatorcurrent" type="text" description="发电机电流">
+          <decode packet="EVAnalog" offset="875" length="2"/>
+        </field>
+      </field_group>
+      <field_group name="brake_system_monitoring" description="刹车系统">
+        <field name="lb_brake_caliper_sensor_temp" type="text" description="制动钳左后传感器温度">
+          <decode packet="AnalogInfo" offset="99" length="1"/>
+        </field>
+        <field name="lf_brake_caliper_sensor_temp" type="text" description="制动钳左前传感器温度">
+          <decode packet="AnalogInfo" offset="100" length="1"/>
+        </field>
+        <field name="lm_brake_caliper_sensor_temp" type="text" description="制动钳左中传感器温度">
+          <decode packet="AnalogInfo" offset="101" length="1"/>
+        </field>
+        <field name="local_alarm_temp_setting" type="text" description="本地告警温度设置">
+          <decode packet="AnalogInfo" offset="102" length="1"/>
+        </field>
+        <field name="rf_brake_caliper_sensor_temp" type="text" description="制动钳右前传感器温度">
+          <decode packet="AnalogInfo" offset="103" length="1"/>
+        </field>
+        <field name="rb_brake_caliper_sensor_temp" type="text" description="制动钳右后传感器温度">
+          <decode packet="AnalogInfo" offset="104" length="1"/>
+        </field>
+        <field name="rm_brake_caliper_sensor_temp" type="text" description="制动钳右中传感器温度">
+          <decode packet="AnalogInfo" offset="105" length="1"/>
+        </field>
+        <field name="brake" type="text" description="制动">
+          <decode packet="StateInfo1" offset="35" length="1"/>
+        </field>
+        <field name="electricbrake" type="text" description="电制动">
+          <decode packet="EVStateInfo" offset="41" length="1"/>
+        </field>
+        <field name="handbrake" type="text" description="手刹">
+          <decode packet="StateInfo1" offset="36" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="body_information_monitoring" description="车身信息">
+        <field name="batteryvoltage" type="text" description="蓄电池电压">
+          <decode packet="AnalogInfo" offset="106" length="2"/>
+        </field>
+        <field name="mileage" type="text" description="累计里程">
+          <decode packet="AnalogInfo" offset="108" length="4"/>
+        </field>
+        <field name="shortmileage" type="text" description="短累计里程">
+          <decode packet="AnalogInfo" offset="112" length="4"/>
+        </field>
+        <field name="totalenergyuse" type="text" description="总能耗">
+          <decode packet="AnalogInfo" offset="116" length="4"/>
+        </field>
+        <field name="hornelect" type="text" description="电喇叭">
+          <decode packet="StateInfo1" offset="37" length="1"/>
+        </field>
+        <field name="safebelt" type="text" description="安全带">
+          <decode packet="StateInfo3" offset="43" length="1"/>
+        </field>
+        <field name="hornair" type="text" description="气喇叭">
+          <decode packet="StateInfo1" offset="38" length="1"/>
+        </field>
+        <field name="speed" type="int" description="车速">
+          <decode packet="AnalogInfo" offset="120" length="2"/>
+        </field>
+        <field name="disabledhelp" type="text" description="残疾人求助">
+          <decode packet="StateInfo3" offset="44" length="1"/>
+        </field>
+        <field name="vin" type="text" description="车辆VIN号">
+          <decode packet="EVStateInfo" offset="42" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="monitoring_of_oil_pump_system" description="油泵系统">
+        <field name="opitemp" type="text" description="油泵逆变器温度">
+          <decode packet="EVAnalog" offset="877" length="1"/>
+        </field>
+        <field name="opivoltageout" type="text" description="油泵逆变器输出电压">
+          <decode packet="EVAnalog" offset="878" length="2"/>
+        </field>
+        <field name="oilpump_status" type="text" description="油泵状态">
+          <decode packet="StateInfo1" offset="39" length="1"/>
+        </field>
+        <field name="opicurrentout" type="text" description="油泵逆变器输出电流">
+          <decode packet="EVAnalog" offset="880" length="2"/>
+        </field>
+        <field name="opicurrentin" type="text" description="油泵逆变器输入电流">
+          <decode packet="EVAnalog" offset="882" length="2"/>
+        </field>
+        <field name="oilpumpspeed" type="text" description="油泵电机转速">
+          <decode packet="AnalogInfo" offset="122" length="2"/>
+        </field>
+      </field_group>
+      <field_group name="steering_assist_monitoring" description="电动转向">
+        <field name="turn_assist_break_code" type="text" description="转向助力故障代码">
+          <decode packet="EVAnalog" offset="884" length="1"/>
+        </field>
+        <field name="turn_assist_heart_signal" type="text" description="转向助力心跳信号">
+          <decode packet="EVAnalog" offset="885" length="1"/>
+        </field>
+        <field name="turn_assist_out_current" type="text" description="转向助力输出电流">
+          <decode packet="EVAnalog" offset="886" length="1"/>
+        </field>
+        <field name="turn_assist_out_volt" type="text" description="转向助力输出电压">
+          <decode packet="EVAnalog" offset="887" length="1"/>
+        </field>
+        <field name="turn_assist_radiator_temp" type="text" description="转向助力散热器温度">
+          <decode packet="EVAnalog" offset="888" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="tire_pressure_system_monitoring" description="胎压系统">
+        <field name="tyrelayout" type="text" description="轮胎布局">
+          <decode packet="AnalogInfo" offset="124" length="1"/>
+        </field>
+        <field name="tyreposition" type="text" description="轮胎位置">
+          <decode packet="AnalogInfo" offset="125" length="1"/>
+        </field>
+        <field name="tyrepressurehigh" type="text" description="轮胎压力高位">
+          <decode packet="AnalogInfo" offset="126" length="1"/>
+        </field>
+        <field name="tyrepressurelow" type="text" description="轮胎压力低位">
+          <decode packet="AnalogInfo" offset="127" length="1"/>
+        </field>
+        <field name="tyretemper" type="text" description="轮胎温度">
+          <decode packet="AnalogInfo" offset="128" length="2"/>
+        </field>
+        <field name="tyresensorstat" type="text" description="车轮传感器状态">
+          <decode packet="StateInfo2" offset="43" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="abs_system_monitoring" description="ABS系统">
+        <field name="abs" type="text" description="ABS工作">
+          <decode packet="StateInfo1" offset="40" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="power_supply_system_monitoring" description="电源系统">
+        <field name="keyacc" type="text" description="钥匙1（ACC）">
+          <decode packet="StateInfo3" offset="45" length="1"/>
+        </field>
+        <field name="keyon" type="text" description="钥匙2(ON)">
+          <decode packet="StateInfo3" offset="46" length="1"/>
+        </field>
+        <field name="keystart" type="text" description="钥匙3（START）">
+          <decode packet="StateInfo3" offset="47" length="1"/>
+        </field>
+        <field name="absence_switch_indicator_power" type="text" description="翘板开关指示灯电源">
+          <decode packet="StateInfo3" offset="48" length="1"/>
+        </field>
+        <field name="ACC_Relay_power" type="text" description="ACC继电器电源">
+          <decode packet="StateInfo3" offset="49" length="1"/>
+        </field>
+        <field name="assist_driving_power" type="text" description="辅助驾驶电源">
+          <decode packet="StateInfo3" offset="50" length="1"/>
+        </field>
+        <field name="fatigue_driving_control_power" type="text" description="疲劳驾驶控制电源">
+          <decode packet="StateInfo3" offset="51" length="1"/>
+        </field>
+        <field name="indicator_light_power" type="text" description="指示灯电源">
+          <decode packet="StateInfo3" offset="52" length="1"/>
+        </field>
+        <field name="intelligence_drain_power" type="text" description="智能排水电源">
+          <decode packet="StateInfo3" offset="53" length="1"/>
+        </field>
+        <field name="maintenance_light_power" type="text" description="维修灯电源">
+          <decode packet="StateInfo3" offset="54" length="1"/>
+        </field>
+        <field name="mcucheckstat" type="text" description="MCU自检状态">
+          <decode packet="EVStateInfo" offset="43" length="1"/>
+        </field>
+        <field name="new_energy_monitor_power" type="text" description="新能源监控电源">
+          <decode packet="StateInfo3" offset="55" length="1"/>
+        </field>
+        <field name="powerslot" type="text" description="投币机电源">
+          <decode packet="StateInfo2" offset="44" length="1"/>
+        </field>
+        <field name="reverse_radar_control_power" type="text" description="倒车雷达控制电源">
+          <decode packet="StateInfo3" offset="56" length="1"/>
+        </field>
+        <field name="USB_power" type="text" description="USB电源">
+          <decode packet="StateInfo3" offset="57" length="1"/>
+        </field>
+        <field name="air_pump_power_supply_backup_2" type="text" description="气泵电源备用2">
+          <decode packet="StateInfo3" offset="58" length="1"/>
+        </field>
+        <field name="battery_compartment_fan_power_supply" type="text" description="电池舱风扇电源">
+          <decode packet="StateInfo3" offset="59" length="1"/>
+        </field>
+        <field name="powercondition" type="text" description="空调照明电源">
+          <decode packet="StateInfo2" offset="45" length="1"/>
+        </field>
+        <field name="powerincarmonitor" type="text" description="车内显示屏电源">
+          <decode packet="StateInfo2" offset="46" length="1"/>
+        </field>
+        <field name="powerreceiver" type="text" description="收放机电源">
+          <decode packet="StateInfo2" offset="47" length="1"/>
+        </field>
+        <field name="shutdown_delay_output_1" type="text" description="关断延时输出1">
+          <decode packet="StateInfo3" offset="60" length="1"/>
+        </field>
+        <field name="tvpowerfront" type="text" description="前电视电源">
+          <decode packet="StateInfo2" offset="48" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="lighting_system_monitoring" description="灯光系统">
+        <field name="brakelight" type="text" description="刹车灯">
+          <decode packet="StateInfo1" offset="41" length="1"/>
+        </field>
+        <field name="foglightfront" type="text" description="前雾灯">
+          <decode packet="StateInfo1" offset="42" length="1"/>
+        </field>
+        <field name="foglightrear" type="text" description="后雾灯">
+          <decode packet="StateInfo1" offset="43" length="1"/>
+        </field>
+        <field name="leftlamp" type="text" description="左日光灯">
+          <decode packet="StateInfo1" offset="44" length="1"/>
+        </field>
+        <field name="lightdriver" type="text" description="司机灯">
+          <decode packet="StateInfo2" offset="49" length="1"/>
+        </field>
+        <field name="lightfar" type="text" description="远光灯">
+          <decode packet="StateInfo1" offset="45" length="1"/>
+        </field>
+        <field name="lightguide" type="text" description="路牌灯">
+          <decode packet="StateInfo2" offset="50" length="1"/>
+        </field>
+        <field name="lightnear" type="text" description="近光灯">
+          <decode packet="StateInfo1" offset="46" length="1"/>
+        </field>
+        <field name="lightsmall" type="text" description="小灯（位置灯）">
+          <decode packet="StateInfo1" offset="47" length="1"/>
+        </field>
+        <field name="reverselight" type="text" description="倒车灯">
+          <decode packet="StateInfo1" offset="48" length="1"/>
+        </field>
+        <field name="rightlamp" type="text" description="右日光灯">
+          <decode packet="StateInfo1" offset="49" length="1"/>
+        </field>
+        <field name="turnlampleft" type="text" description="左转向灯">
+          <decode packet="StateInfo1" offset="50" length="1"/>
+        </field>
+        <field name="turnlampright" type="text" description="右转向灯">
+          <decode packet="StateInfo1" offset="51" length="1"/>
+        </field>
+        <field name="front_door_pedal_light" type="text" description="前门踏步灯">
+          <decode packet="StateInfo3" offset="61" length="1"/>
+        </field>
+        <field name="middle_door_pedal_light" type="text" description="中门踏步灯">
+          <decode packet="StateInfo3" offset="62" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="defrosting_system_monitoring" description="除霜系统">
+        <field name="defroster1" type="text" description="除霜器1">
+          <decode packet="StateInfo2" offset="51" length="1"/>
+        </field>
+        <field name="defroster2" type="text" description="除霜器2">
+          <decode packet="StateInfo2" offset="52" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="transmission_system_monitoring" description="变速箱系统">
+        <field name="ngear" type="text" description="N档">
+          <decode packet="StateInfo1" offset="52" length="1"/>
+        </field>
+        <field name="pgear" type="text" description="P档">
+          <decode packet="StateInfo1" offset="53" length="1"/>
+        </field>
+        <field name="rgear" type="text" description="R档">
+          <decode packet="StateInfo1" offset="54" length="1"/>
+        </field>
+        <field name="d1_d6" type="text" description="D1-D6档">
+          <decode packet="StateInfo1" offset="55" length="1"/>
+        </field>
+        <field name="dgear_v13" type="text" description="D档">
+          <decode packet="StateInfo1" offset="56" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="door_system_monitoring" description="门系统">
+        <field name="door_power" type="text" description="门电源">
+          <decode packet="StateInfo3" offset="63" length="1"/>
+        </field>
+        <field name="front_door_closed" type="text" description="前门关">
+          <decode packet="StateInfo3" offset="64" length="1"/>
+        </field>
+        <field name="frontdooropen" type="text" description="前门开">
+          <decode packet="StateInfo1" offset="57" length="1"/>
+        </field>
+        <field name="middle_door_closed" type="text" description="中门关">
+          <decode packet="StateInfo3" offset="65" length="1"/>
+        </field>
+        <field name="middledooropen" type="text" description="中门开">
+          <decode packet="StateInfo1" offset="58" length="1"/>
+        </field>
+        <field name="charging_bin_door" type="text" description="充电仓门状态">
+          <decode packet="StateInfo3" offset="66" length="1"/>
+        </field>
+        <field name="middledoorbell" type="text" description="中门下车铃">
+          <decode packet="StateInfo1" offset="59" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="fan_system_monitoring" description="风扇系统">
+        <field name="driverfan1" type="text" description="司机风扇1">
+          <decode packet="StateInfo2" offset="53" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="door_clamp_and_emergency_valve_monitoring" description="门防夹">
+        <field name="emergencyfi" type="text" description="前门内应急阀打开">
+          <decode packet="StateInfo3" offset="67" length="1"/>
+        </field>
+        <field name="emergencymi" type="text" description="中门内应急阀打开">
+          <decode packet="StateInfo3" offset="68" length="1"/>
+        </field>
+        <field name="emecapfo" type="text" description="前门外应急阀盖打开">
+          <decode packet="StateInfo3" offset="69" length="1"/>
+        </field>
+        <field name="emecapmo" type="text" description="中门外应急阀盖打开">
+          <decode packet="StateInfo3" offset="70" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="fire_extinguisher_system" description="灭火器">
+        <field name="fire_extinguisher_1_normal" type="text" description="灭火器1号设备正常">
+          <decode packet="StateInfo1" offset="60" length="1"/>
+        </field>
+        <field name="fire_extinguisher_1_not_install" type="text" description="灭火器1号设备未安装">
+          <decode packet="StateInfo1" offset="61" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="insulation_monitor_information" description="绝缘监测仪">
+        <field name="insulation_grade" type="text" description="绝缘等级">
+          <decode packet="StateInfo1" offset="62" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="motor_system" description="电机系统">
+        <field name="k1_heat_relay_status" type="text" description="K1加热继电器状态">
+          <decode packet="StateInfo3" offset="71" length="1"/>
+        </field>
+        <field name="k2_charge_2_relay_status" type="text" description="K2充电2继电器状态">
+          <decode packet="StateInfo3" offset="72" length="1"/>
+        </field>
+        <field name="k3_charge_1_relay_status" type="text" description="K3充电1继电器状态">
+          <decode packet="StateInfo3" offset="73" length="1"/>
+        </field>
+        <field name="k4_main_loop_relay_status" type="text" description="K4主回路继电器状态">
+          <decode packet="StateInfo3" offset="74" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="centralized_lubrication_monitoring" description="集中润滑">
+        <field name="lubricatingstop" type="text" description="休止状态">
+          <decode packet="StateInfo2" offset="54" length="1"/>
+        </field>
+        <field name="lubricating" type="text" description="正在润滑">
+          <decode packet="StateInfo2" offset="55" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="smoke_system" description="烟雾系统">
+        <field name="smog_alarm" type="text" description="烟雾报警器">
+          <decode packet="StateInfo3" offset="75" length="1"/>
+        </field>
+        <field name="fog_monitor_status" type="text" description="烟雾报警器工作状态1">
+          <decode packet="StateInfo3" offset="76" length="1"/>
+        </field>
+        <field name="fog_monitor_status_2" type="text" description="烟雾报警器工作状态2">
+          <decode packet="StateInfo3" offset="77" length="1"/>
+        </field>
+        <field name="fog_monitor_status_3" type="text" description="烟雾报警器工作状态3">
+          <decode packet="StateInfo3" offset="78" length="1"/>
+        </field>
+        <field name="fog_monitor_status_4" type="text" description="烟雾报警器工作状态4">
+          <decode packet="StateInfo3" offset="79" length="1"/>
+        </field>
+        <field name="fog_monitor_status_5" type="text" description="烟雾报警器工作状态5">
+          <decode packet="StateInfo3" offset="80" length="1"/>
+        </field>
+        <field name="fog_monitor_status_6" type="text" description="烟雾报警器工作状态6">
+          <decode packet="StateInfo3" offset="81" length="1"/>
+        </field>
+        <field name="fog_monitor_status_7" type="text" description="烟雾报警器工作状态7">
+          <decode packet="StateInfo3" offset="82" length="1"/>
+        </field>
+        <field name="fog_monitor_status_8" type="text" description="烟雾报警器工作状态8">
+          <decode packet="StateInfo3" offset="83" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="electric_steering_system_monitoring" description="电动转向系统">
+        <field name="turn_assist_status" type="text" description="转向助力工作状态">
+          <decode packet="StateInfo3" offset="84" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="wiper_system_monitoring" description="雨刮系统">
+        <field name="wipergap1" type="text" description="雨刮间隙1">
+          <decode packet="StateInfo1" offset="63" length="1"/>
+        </field>
+        <field name="wiperhigh" type="text" description="雨刮高速">
+          <decode packet="StateInfo1" offset="64" length="1"/>
+        </field>
+        <field name="wiperlow" type="text" description="雨刮低速">
+          <decode packet="StateInfo1" offset="65" length="1"/>
+        </field>
+        <field name="wiperwheel" type="text" description="雨刮凸轮">
+          <decode packet="StateInfo1" offset="66" length="1"/>
+        </field>
+        <field name="wiper" type="text" description="雨刮喷淋">
+          <decode packet="StateInfo1" offset="67" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="insulation_tester_system_monitoring" description="绝缘监测仪系统">
+        <field name="insulation_module_life_value" type="text" description="绝缘模块Life值">
+          <decode packet="EVAnalog" offset="889" length="1"/>
+        </field>
+        <field name="insulation_tester_program_version_number" type="text" description="绝缘检测仪程序版本号">
+          <decode packet="EVAnalog" offset="890" length="8"/>
+        </field>
+      </field_group>
+      <field_group name="monitoring_of_heat_dissipation_system" description="ATS系统">
+        <field name="radwaterintemp1" type="text" description="散热器进水1温度">
+          <decode packet="AnalogInfo" offset="130" length="1"/>
+        </field>
+        <field name="radwaterintemp2" type="text" description="散热器进水2温度">
+          <decode packet="AnalogInfo" offset="131" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="charging_system_monitoring" description="充电系统">
+        <field name="pre_charge_overtime" type="text" description="预充超时">
+          <decode packet="EVStateInfo" offset="44" length="1"/>
+        </field>
+      </field_group>
+      <field_group name="steering_system_monitoring" description="转向系统">
+        <field name="hydralvalsignal" type="text" description="液压值信号">
+          <decode packet="AnalogInfo" offset="132" length="1"/>
+        </field>
+        <field name="stpumpcurrent" type="text" description="转向泵三相电流">
+          <decode packet="AnalogInfo" offset="133" length="2"/>
+        </field>
+        <field name="stpumpmotortemp" type="text" description="转向泵电机温度">
+          <decode packet="AnalogInfo" offset="135" length="1"/>
+        </field>
+        <field name="stpumpspeed" type="text" description="转向泵转速">
+          <decode packet="AnalogInfo" offset="136" length="2"/>
+        </field>
+        <field name="stpumpvol" type="text" description="转向泵三相电压">
+          <decode packet="AnalogInfo" offset="138" length="2"/>
+        </field>
+      </field_group>
+    </fields>
+    <condition>
+      <range target="vehicledeviceid" low="1810220000001303" high="1810220000001303"/>
+      <range target="vehicledeviceid" low="1810220000001344" high="1810220000001344"/>
+      <range target="vehicledeviceid" low="1810220000001428" high="1810220000001428"/>
+    </condition>
+    <comment>
+      electronic, 02 1p3
+    </comment>
+  </type>
+</types>
